@@ -1,0 +1,2 @@
+doxygen.exe PC_Doxyfile
+doxygen.exe FPGA_Doxyfile
