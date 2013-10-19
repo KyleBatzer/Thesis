@@ -1,0 +1,251 @@
+﻿<Window x:Class="Data_Acq_and_Stim_Control_Center.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
+        Title="MainWindow" Height="768" Width="1024" Closing="Window_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="265" />
+            <RowDefinition Height="247*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="257" />
+            <ColumnDefinition Width="497*" />
+            <ColumnDefinition Width="307" />
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Header="Channel Configuration" HorizontalAlignment="Stretch" Name="groupBox1" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="1">
+            <DataGrid HorizontalAlignment="Stretch" Name="dataGrid1" VerticalAlignment="Stretch" AutoGenerateColumns="False" CanUserSortColumns="False" BeginningEdit="dataGrid1_BeginningEdit">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Channel #" Binding="{Binding Path=channel}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Waveform File" Binding="{Binding Path=waveform_file}"></DataGridTextColumn>
+                    <DataGridComboBoxColumn Header="Mode" SelectedItemBinding="{Binding Path=mode}">
+                        <DataGridComboBoxColumn.ItemsSource>
+                            <col:ArrayList>
+                                <sys:String>Acquisition</sys:String>
+                                <sys:String>Stimulation</sys:String>
+                            </col:ArrayList>
+                        </DataGridComboBoxColumn.ItemsSource>
+                    </DataGridComboBoxColumn>
+                    <DataGridComboBoxColumn Header="Switch 1" SelectedItemBinding="{Binding Path=sw1}" >
+                        <DataGridComboBoxColumn.ItemsSource>
+                            <col:ArrayList>
+                                <sys:String>On</sys:String>
+                                <sys:String>Off</sys:String>
+                            </col:ArrayList>
+                        </DataGridComboBoxColumn.ItemsSource>
+                    </DataGridComboBoxColumn>
+                    <DataGridComboBoxColumn Header="Switch 2" SelectedItemBinding="{Binding Path=sw2}">
+                        <DataGridComboBoxColumn.ItemsSource>
+                            <col:ArrayList>
+                                <sys:String>On</sys:String>
+                                <sys:String>Off</sys:String>
+                            </col:ArrayList>
+                        </DataGridComboBoxColumn.ItemsSource>
+                    </DataGridComboBoxColumn>
+                    <DataGridComboBoxColumn Header="Switch 3" SelectedItemBinding="{Binding Path=sw3}">
+                        <DataGridComboBoxColumn.ItemsSource>
+                            <col:ArrayList>
+                                <sys:String>On</sys:String>
+                                <sys:String>Off</sys:String>
+                            </col:ArrayList>
+                        </DataGridComboBoxColumn.ItemsSource>
+                    </DataGridComboBoxColumn>
+                    <DataGridComboBoxColumn Header="Switch 4" SelectedItemBinding="{Binding Path=sw4}">
+                        <DataGridComboBoxColumn.ItemsSource>
+                            <col:ArrayList>
+                                <sys:String>On</sys:String>
+                                <sys:String>Off</sys:String>
+                            </col:ArrayList>
+                        </DataGridComboBoxColumn.ItemsSource>
+                    </DataGridComboBoxColumn>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </GroupBox>
+
+        <GroupBox Header="Setup" HorizontalAlignment="Stretch" Name="groupBox2" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0">
+            <Grid>
+                <!-- <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition  />
+                    <RowDefinition  />
+                    <RowDefinition  />
+                    <RowDefinition  />
+                    <RowDefinition  />
+                </Grid.RowDefinitions>-->
+
+                <Label Content="Active Channels" Height="29" Name="label1" Width="96" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="6,27,142,0" />
+                <ComboBox Height="23" HorizontalAlignment="Center" Name="channels_CB" VerticalAlignment="Top" Width="58" SelectionChanged="channels_CB_SelectionChanged" Margin="179,29,8,0">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                    <ComboBoxItem>6</ComboBoxItem>
+                    <ComboBoxItem>7</ComboBoxItem>
+                    <ComboBoxItem>8</ComboBoxItem>
+                </ComboBox>
+                <Label Content="COM Port" Height="29" Name="label2" Width="96" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="6,0,144,0" />
+                <Button Content="Send Configuration to FPGA" Height="23" HorizontalAlignment="Center"  Name="SendConfig_Button" VerticalAlignment="Top" Width="183" Click="SendConfig_Button_Click" Margin="30,124,32,0" />
+                <ComboBox ItemsSource="{Binding}" Height="23" HorizontalAlignment="Center" Name="com_CB" VerticalAlignment="Top" Width="58" SelectionChanged="com_CB_SelectionChanged" Margin="179,3,8,0">
+                    <!--<ComboBoxItem>COM3</ComboBoxItem>
+                    <ComboBoxItem>COM4</ComboBoxItem>-->
+                </ComboBox>
+                <Button Content="Start Acquisition" Height="23" HorizontalAlignment="Center" Name="acq_button" VerticalAlignment="Top" Width="182" Click="acq_button_Click" Margin="30,152,33,0" />
+                <Button Content="Set Waveform" Height="23" HorizontalAlignment="Center"  Name="setWave_button" VerticalAlignment="Top" Width="91" Click="setWave_button_Click" Margin="122,95,32,0" />
+                <ComboBox Height="23" HorizontalAlignment="Center"  Name="setWaveChan_CB" VerticalAlignment="Center" Width="120" Margin="117,58,8,161" />
+
+                <Button Content="Get Waveform" Height="23" HorizontalAlignment="Center"  Name="getWave_button" VerticalAlignment="Bottom" Width="91" Click="getWave_button_Click" Margin="30,0,124,124" />
+                <Label Content="Send to .................." Height="28" HorizontalAlignment="Left" Margin="6,55,0,0" Name="label8" VerticalAlignment="Top" />
+                <Button Content="Start Multi-Stim" Height="23" HorizontalAlignment="Left" Margin="30,184,0,0" Name="StartMuliStim_Button" VerticalAlignment="Top" Width="91" Click="StartMuliStim_Button_Click" />
+                <Button Content="End Multi-Stim" Height="23" HorizontalAlignment="Left" Margin="122,184,0,0" Name="EndMuliStim_Button" VerticalAlignment="Top" Width="90" Click="EndMuliStim_Button_Click" />
+                <Button Content="Single Stim" Height="23" HorizontalAlignment="Left" Margin="30,211,0,0" Name="SingleStim_Button" VerticalAlignment="Top" Width="182" Click="SingleStim_Button_Click" />
+            </Grid>
+        </GroupBox>
+
+        <TabControl Grid.Column="2" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch" >
+            <TabItem Header="Cypress USB Controls" Name="tabItem1">
+                <Grid>
+                    <Label Content="Endpoint....." Height="28" HorizontalAlignment="Left" Margin="6,9,0,0" Name="label3" VerticalAlignment="Top" Width="74"/>
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="86,11,0,0" Name="EndPointsComboBox" VerticalAlignment="Top" Width="203" SelectionChanged="EndPointsComboBox_SelectionChanged" />
+                    <Label Content="Packets Per Xfer" Height="28" HorizontalAlignment="Left" Margin="6,43,0,0" Name="label4" VerticalAlignment="Top" />
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="169,43,0,0" Name="PpxBox" VerticalAlignment="Top" Width="120">
+                        <ComboBoxItem>1</ComboBoxItem>
+                        <ComboBoxItem>2</ComboBoxItem>
+                        <ComboBoxItem>4</ComboBoxItem>
+                        <ComboBoxItem>8</ComboBoxItem>
+                        <ComboBoxItem>16</ComboBoxItem>
+                        <ComboBoxItem>32</ComboBoxItem>
+                        <ComboBoxItem>64</ComboBoxItem>
+                        <ComboBoxItem>128</ComboBoxItem>
+                    </ComboBox>
+                    <Label Content="Xfers to Queue" Height="28" HorizontalAlignment="Left" Margin="6,77,0,0" Name="label5" VerticalAlignment="Top" />
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="169,77,0,0" Name="QueueBox" VerticalAlignment="Top" Width="120">
+                        <ComboBoxItem>1</ComboBoxItem>
+                        <ComboBoxItem>2</ComboBoxItem>
+                        <ComboBoxItem>4</ComboBoxItem>
+                        <ComboBoxItem>8</ComboBoxItem>
+                        <ComboBoxItem>16</ComboBoxItem>
+                        <ComboBoxItem>32</ComboBoxItem>
+                        <ComboBoxItem>64</ComboBoxItem>
+                        <ComboBoxItem>128</ComboBoxItem>
+                    </ComboBox>
+                    <Label Content="Successes" Height="28" HorizontalAlignment="Left" Margin="6,117,0,0" Name="label6" VerticalAlignment="Top" />
+                    <Label Content="Failures" Height="28" HorizontalAlignment="Left" Margin="151,117,0,0" Name="label7" VerticalAlignment="Top" />
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="74,120,0,0" Name="SuccessBox" VerticalAlignment="Top" Width="71" />
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="207,120,0,0" Name="FailuresBox" VerticalAlignment="Top" Width="71" />
+                    <GroupBox Header="Throughput (KB/s)" Height="63" HorizontalAlignment="Left" Margin="6,153,0,0" Name="groupBox5" VerticalAlignment="Top" Width="283">
+                        <Grid>
+                            <ProgressBar Height="10" HorizontalAlignment="Left" Margin="6,8,0,0" Name="ProgressBar" VerticalAlignment="Top" Width="259" />
+                            <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="74,15,0,0" Name="ThroughputLabel" VerticalAlignment="Top" Width="128" HorizontalContentAlignment="Center" />
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Scripting" Name="tabItem2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="186*" />
+                        <RowDefinition Height="47*" />
+                    </Grid.RowDefinitions>
+                    <TextBox Text="{Binding Path=ScriptText}" HorizontalAlignment="Stretch" Name="script_Textbox" VerticalAlignment="Stretch" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+                    <Button Content="Run Script" Grid.Row="1" Height="23" HorizontalAlignment="Center"  Name="RunScript_Button" VerticalAlignment="Center" Width="75" Click="RunScript_Button_Click" Margin="107,12,115,12" />
+                    <Button Content="Load Script" Grid.Row="1" Height="23" HorizontalAlignment="Left"  Name="LoadScript_Button" VerticalAlignment="Center" Width="75" Click="LoadScript_Button_Click" />
+                    <Button Content="Save Script As" Grid.Row="1" Height="23" HorizontalAlignment="Right"  Name="SaveAsScript_Button" VerticalAlignment="Center" Width="84" Margin="0,12" Click="SaveAsScript_Button_Click" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <TabControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Name="tabControl2" VerticalAlignment="Stretch" >
+            <TabItem Header="RS232 Communication Log" Name="RS232_Tab">
+                <Grid>
+                    <DataGrid HorizontalAlignment="Stretch" Name="dataGrid_Comm" VerticalAlignment="Stretch" AutoGenerateColumns="False" CanUserSortColumns="False" FrozenColumnCount="3" VerticalGridLinesBrush="Gray" HorizontalGridLinesBrush="Gray" Focusable="False" RowHeaderWidth="0" FontSize="12" Background="#FFF2EFEF" GridLinesVisibility="All" >
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Clear Communication Log" Name="clearContext" Click="clearContext_Click" />
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Style.Triggers>
+                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                        <Setter Property="Background" Value="Black" />
+                                        <Setter Property="BorderBrush" Value="Black" />
+                                    </Trigger>
+                                </Style.Triggers>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                            <Border Name="DataGridCellBorder">
+                                                <ContentControl Content="{TemplateBinding Content}">
+                                                    <ContentControl.ContentTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Background="#FFF2EFEF" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" 
+                                Height="auto" Width="auto" Text="{Binding Text}" Foreground="Black" />
+                                                        </DataTemplate>
+                                                    </ContentControl.ContentTemplate>
+                                                </ContentControl>
+                                            </Border>
+                                        </ControlTemplate>
+
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGrid.Resources>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Timestamp" Binding="{Binding Path=Timestamp}" IsReadOnly="True" Width="200">
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Send" Binding="{Binding Path=Send}" IsReadOnly="True" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Receive" Binding="{Binding Path=Receive}" IsReadOnly="True" Width="*"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Graphing" Name="Graphing_Tab">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="700*" />
+                        <ColumnDefinition Width="164" />
+                        <ColumnDefinition Width="164" />
+                        <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="182*" />
+                        <RowDefinition Height="33" />
+                    </Grid.RowDefinitions>
+
+                    <d3:ChartPlotter Grid.ColumnSpan="3" Name="plotter" Margin="1,1,1,1">
+                        
+                    </d3:ChartPlotter>
+                    <Button Content="Load File" Grid.Row="1" Grid.Column="3" Height="23" HorizontalAlignment="Center" Name="LoadFile_Button" VerticalAlignment="Center" Width="70" Click="LoadFile_Button_Click" Margin="70,0,0,0" />
+                    <Button Content="Output CSV" Grid.Row="1" Grid.Column="3" Height="23" HorizontalAlignment="Center" Name="Output_CSV_Button" VerticalAlignment="Center" Width="70" Click="Output_CSV_Button_Click" Margin="0,0,70,0" />
+
+
+                    <Slider Grid.Row="1" HorizontalAlignment="Stretch" Name="slider1" VerticalAlignment="Center" ValueChanged="slider1_ValueChanged"  />
+                    <Label Content="GraphView" Grid.Column="1" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="3,3,0,0" Name="label9" VerticalAlignment="Top" />
+                    <TextBox HorizontalAlignment="Right" Name="ViewSelect_TextBox" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Margin="0,6,9,0" Width="83" />
+                    <Label Content="NumSamples" Grid.Column="1" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="163,3,0,0" Name="label10" VerticalAlignment="Top" Grid.ColumnSpan="2" />
+                    <DataGrid AutoGenerateColumns="False" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch"  Name="Graph_DataGrid" VerticalAlignment="Stretch" HorizontalGridLinesBrush="White" Foreground="Black" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" VerticalGridLinesBrush="White" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" RowHeaderWidth="0" Margin="1,1,1,1" SelectionChanged="Graph_DataGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Select Channels to Graph" Binding="{Binding Path=channel}" IsReadOnly="True" Width="150"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <ComboBox Grid.Column="2" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="81,5,0,0" Name="NumSamples_CB" VerticalAlignment="Top" Width="81" SelectionChanged="NumSamples_CB_SelectionChanged" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="3">
+            <StatusBarItem Name="AcqStatus" Content="{Binding Path=TransferStatusText}"/>
+        </StatusBar>
+    </Grid>
+</Window>
