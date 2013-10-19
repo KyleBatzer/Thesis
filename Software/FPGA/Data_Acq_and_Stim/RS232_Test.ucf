@@ -1,0 +1,13 @@
+# Clock
+NET "clk" 			LOC = "B8"; # Bank = 0, Pin name = IP_L13P_0/GCLK8, Type = GCLK, Sch name = GCLK0
+
+# Reset
+NET "reset" 			LOC = "R17"; # switch 7
+
+
+# RS232_Module
+NET "RX"   			LOC = "U6"; 
+NET "TX"   			LOC = "P9";
+
+NET "RX_led"   			LOC = "K15"; 
+NET "TX_led"   			LOC = "K14"; 
